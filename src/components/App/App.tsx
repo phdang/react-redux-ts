@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-
-function App() {
+import Recorder from '../Recorder';
+const App = () => {
   return (
-    <div className="App">
-      Hello World
+    <div className='App'>
+      <Recorder />
     </div>
   );
-}
+};
 
 export default App;
