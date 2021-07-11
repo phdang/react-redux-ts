@@ -4,8 +4,7 @@ import { selectDateStart, start, stop } from '../../redux/recorder';
 import cx from 'classnames';
 import './Recorder.css';
 import { addZero } from '../../llb/utils';
-
-
+import { createUserEvent } from '../../redux/user-events';
 
 const Recorder = () => {
   const dispatch = useDispatch();
@@ -23,6 +22,7 @@ const Recorder = () => {
     } else {
       // stop the counter
       window.clearInterval(interval.current);
+      dispatch(createUserEvent());
       dispatch(stop());
     }
   };

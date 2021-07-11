@@ -8,6 +8,7 @@ import {
   UserEvent,
 } from '../../redux/user-events';
 import { addZero } from '../../llb/utils';
+import EventItem from './EventItem';
 
 const mapState = (state: RootState) => ({
   events: selectUserEventsArray(state),
@@ -61,7 +62,7 @@ const Calendar: React.FC<Props> = ({ events, loadUserEvents }) => {
   if (events.length) {
     groupedEvents = groupEventsByDate(events);
     sortedGroupKeys = Object.keys(groupedEvents).sort(
-      (date1, date2) => new Date(date1).getTime() - new Date(date2).getTime()
+      (date1, date2) => new Date(date2).getTime() - new Date(date1).getTime()
     );
   }
 
@@ -72,12 +73,6 @@ const Calendar: React.FC<Props> = ({ events, loadUserEvents }) => {
         const groupDate = new Date(date);
         const day = groupDate.getDate();
         const month = groupDate.toLocaleString(undefined, { month: 'long' });
-        const getHours = (date: string) => {
-          return addZero(new Date(date).getHours());
-        };
-        const getMinutes = (date: string) => {
-          return addZero(new Date(date).getMinutes());
-        };
         return (
           <div key={date} className='calendar-day'>
             <div className='calendar-day-label'>
@@ -87,22 +82,7 @@ const Calendar: React.FC<Props> = ({ events, loadUserEvents }) => {
             </div>
             <div className='calendar-events'>
               {events.map((event) => {
-                console.log(event);
-                return (
-                  <div key={event.id} className='calendar-event'>
-                    <div className='calendar-event-info'>
-                      <div className='calendar-event-time'>
-                        {getHours(event.dateStart)}:
-                        {getMinutes(event.dateStart)} -{' '}
-                        {getHours(event.dateEnd)}:{getMinutes(event.dateEnd)}
-                      </div>
-                      <div className='calendar-event-title'>{event.title}</div>
-                    </div>
-                    <button className='calendar-event-delete-button'>
-                      &times;
-                    </button>
-                  </div>
-                );
+                return <EventItem key={event.id} event={event} />;
               })}
             </div>
           </div>
@@ -110,7 +90,9 @@ const Calendar: React.FC<Props> = ({ events, loadUserEvents }) => {
       })}
     </div>
   ) : (
-    <p>Loading...</p>
+    <div className='lds-wrapper'>
+      <div className='lds-dual-ring'></div>
+    </div>
   );
 };
 
