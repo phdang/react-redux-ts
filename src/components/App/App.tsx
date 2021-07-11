@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import Recorder from '../Recorder';
+import Recorder from '../Recorder/Recorder';
+import Calendar from '../Calendar/Calendar';
 const App = () => {
   return (
     <div className='App'>
       <Recorder />
+      <Calendar />
     </div>
   );
 };
